@@ -65,6 +65,25 @@ install: ## Install the binary (release mode)
 	@printf "%bInstalling binary...%b\n" "$(COLOR_BLUE)" "$(COLOR_RESET)"
 	cargo install --path .
 
+##@ Installation (Desktop & Icons)
+
+install-desktop: ## Install desktop entry file
+	@printf "%bInstalling desktop entry...%b\n" "$(COLOR_BLUE)" "$(COLOR_RESET)"
+	install -Dm644 pacsea.desktop /usr/share/applications/pacsea.desktop
+
+install-icon: ## Install application icon
+	@printf "%bInstalling application icon...%b\n" "$(COLOR_BLUE)" "$(COLOR_RESET)"
+	@if [ -f assets/pacsea.svg ]; then \
+		install -Dm644 assets/pacsea.svg /usr/share/icons/hicolor/scalable/apps/pacsea.svg; \
+		gtk-update-icon-cache -q /usr/share/icons/hicolor/ 2>/dev/null || true; \
+		printf "%bIcon cache updated%b\n" "$(COLOR_GREEN)" "$(COLOR_RESET)"; \
+	else \
+		printf "%bWarning: assets/pacsea.svg not found%b\n" "$(COLOR_YELLOW)" "$(COLOR_RESET)"; \
+	fi
+
+install-desktop-and-icon: install-desktop install-icon ## Install desktop entry and icon
+	@printf "%b✓ Desktop integration complete!%b\n" "$(COLOR_GREEN)" "$(COLOR_RESET)"
+
 ##@ Quality Checks
 
 pre-commit: fmt clippy check test ## Run all pre-commit checks (fmt, clippy, check, test)

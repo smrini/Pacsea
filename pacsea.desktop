@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=Pacsea
+Comment=Fast TUI for searching, inspecting, and queueing pacman/AUR packages
+Exec=pacsea
+Icon=pacsea
+Terminal=true
+Categories=Utility;System;PackageManager;
+Keywords=aur;package;search;pacman;

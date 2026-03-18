@@ -100,4 +100,20 @@ package() {
   # Install locale files
   install -d "$pkgdir/usr/share/pacsea/locales"
   install -m644 config/locales/*.yml "$pkgdir/usr/share/pacsea/locales/"
+  
+  # Install desktop entry file
+  install -Dm644 "pacsea.desktop" "$pkgdir/usr/share/applications/pacsea.desktop"
+  
+  # Install application icon (scalable SVG)
+  if [ -f "assets/pacsea.svg" ]; then
+    install -Dm644 "assets/pacsea.svg" "$pkgdir/usr/share/icons/hicolor/scalable/apps/pacsea.svg"
+  fi
+}
+
+post_install() {
+  gtk-update-icon-cache -q /usr/share/icons/hicolor/ 2>/dev/null || true
+}
+
+post_upgrade() {
+  gtk-update-icon-cache -q /usr/share/icons/hicolor/ 2>/dev/null || true
 }
